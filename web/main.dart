@@ -28,14 +28,11 @@ List<Vector2> verticesVec = [
 ];
 
 Float32List getVertices(List<Vector2> verticesVec) {
-  return Float32List.fromList(verticesVec.expand((Vector2 v) => [v.x, v.y]).toList());
+  return Float32List.fromList(
+      verticesVec.expand((Vector2 v) => [v.x, v.y]).toList());
 }
 
-Float32List vertices = Float32List.fromList([
-  -0.5, 0.5,
-  0.0, -0.5,
-  0.5, 0.5
-]);
+Float32List vertices = Float32List.fromList([-0.5, 0.5, 0.0, -0.5, 0.5, 0.5]);
 
 void initWebGl(RenderingContext gl, CanvasElement canvas) {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -74,19 +71,19 @@ void initWebGl(RenderingContext gl, CanvasElement canvas) {
   // Create vbo
   Buffer vbo = gl.createBuffer();
   gl.bindBuffer(WebGL.ARRAY_BUFFER, vbo);
-  gl.bufferData(WebGL.ARRAY_BUFFER, getVertices(verticesVec), WebGL.STATIC_DRAW);
+  gl.bufferData(
+      WebGL.ARRAY_BUFFER, getVertices(verticesVec), WebGL.STATIC_DRAW);
 
   int posAttrib = gl.getAttribLocation(program, "position");
   gl.enableVertexAttribArray(0);
   gl.vertexAttribPointer(posAttrib, 2, WebGL.FLOAT, false, 0, 0);
 }
 
-void renderRectangle(){
+void renderRectangle() {
   CanvasElement canvas = document.getElementById('gameCanvas') as CanvasElement;
   RenderingContext? gl = canvas.getContext3d();
 
-  render(num delta)
-  {
+  render(num delta) {
     gl?.clear(WebGL.COLOR_BUFFER_BIT);
 
     // draw
@@ -96,9 +93,7 @@ void renderRectangle(){
     window.animationFrame.then(render);
   }
 
-
-  if(gl == null)
-  {
+  if (gl == null) {
     print("Your browser doesn't seem to support WebGL.");
     return;
   }
@@ -106,7 +101,6 @@ void renderRectangle(){
   initWebGl(gl, canvas);
   window.animationFrame.then((render));
 }
-
 
 void main() {
   querySelector('#output')?.text = 'Your Dart app is running.';
